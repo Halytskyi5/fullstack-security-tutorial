@@ -8,8 +8,7 @@ import {User} from '../models/user';
   selector: 'app-content',
   imports: [
     WelcomeContentComponent,
-    LoginFormComponent,
-    ServerService
+    LoginFormComponent
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
@@ -21,5 +20,6 @@ export class ContentComponent {
 
   onLogin(user : User) : void {
     this.serverService.postLogin(user);
+    console.log(user)
   }
  }

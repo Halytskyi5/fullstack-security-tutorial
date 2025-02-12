@@ -3,6 +3,7 @@ package com.example.backend.controllers;
 import com.example.backend.dto.CredentialsDto;
 import com.example.backend.dto.UserDto;
 import com.example.backend.services.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AuthController {
 
     private final UserService userService;
