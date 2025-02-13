@@ -2,9 +2,6 @@ import {Component} from '@angular/core';
 import {WelcomeContentComponent} from '../welcome-content/welcome-content.component';
 import {LoginFormComponent} from '../login-form/login-form.component';
 import {ServerService} from '../server.service';
-import {User} from '../models/user';
-import {log} from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
-import {tap} from 'rxjs';
 
 @Component({
   selector: 'app-content',
@@ -20,9 +17,13 @@ export class ContentComponent {
   constructor(private serverService: ServerService) {
   }
 
-  onLogin(user: User): void {
-    console.log(user)
-    this.serverService.postLogin(user).subscribe({
+  onLogin(input: any): void {
+    console.log(input)
+    const loginUser = {
+      login: input.login,
+      password: input.password
+    };
+    this.serverService.postUser(loginUser, "login").subscribe({
       next: (response) => {
         console.log('res ', response)
       },
@@ -33,6 +34,26 @@ export class ContentComponent {
         console.log('finish')
       }
     });
+  }
+
+  onRegister(input: any) {
+    const registerUser = {
+      firstName : input.firstName,
+      lastName : input.lastName,
+      login : input.login,
+      password : input.password
+    };
+    this.serverService.postUser(registerUser, "register").subscribe({
+      next : value => {
+        console.log("successfully: " + value);
+      },
+      error: err => {
+        console.log("error: " + err.error.error);
+      },
+      complete: () => {
+        console.log("complete register");
+      }
+    })
   }
 
 }

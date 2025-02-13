@@ -12,8 +12,11 @@ export class ServerService {
   getMessages() : Observable<any> {
     return this.http.get<any>(`${this.url}/messages`);
   }
-  postLogin(user : User) :Observable<any>{
-    return this.http.post<any>(`${this.url}/login`, user);
+  postUser(user : any, url : string) :Observable<any>{
+    return this.http.post<any>(`${this.url}/${url}`, user);
   }
+
+
+
 
 }
