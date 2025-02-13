@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import {WelcomeContentComponent} from '../welcome-content/welcome-content.component';
 import {LoginFormComponent} from '../login-form/login-form.component';
 import {ServerService} from '../server.service';
+import {Credentials} from '../models/credentials';
+import {User} from '../models/user';
+import {SignUp} from '../models/signup';
 
 @Component({
   selector: 'app-content',
@@ -17,13 +20,9 @@ export class ContentComponent {
   constructor(private serverService: ServerService) {
   }
 
-  onLogin(input: any): void {
+  onLogin(input: Credentials): void {
     console.log(input)
-    const loginUser = {
-      login: input.login,
-      password: input.password
-    };
-    this.serverService.postUser(loginUser, "login").subscribe({
+    this.serverService.login(input).subscribe({
       next: (response) => {
         console.log('res ', response)
       },
@@ -31,21 +30,16 @@ export class ContentComponent {
         console.log(error.error.message)
       },
       complete: () => {
-        console.log('finish')
+        console.log('finish onLogin()')
       }
     });
   }
 
-  onRegister(input: any) {
-    const registerUser = {
-      firstName : input.firstName,
-      lastName : input.lastName,
-      login : input.login,
-      password : input.password
-    };
-    this.serverService.postUser(registerUser, "register").subscribe({
-      next : value => {
-        console.log("successfully: " + value);
+  onRegister(input: SignUp) {
+    this.serverService.register(input).subscribe({
+      next : response => {
+        console.log("successfully: ");
+        console.log(response);
       },
       error: err => {
         console.log("error: " + err.error.error);
