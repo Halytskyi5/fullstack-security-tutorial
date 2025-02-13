@@ -10,16 +10,38 @@ import {SignUp} from './models/signup';
 })
 export class ServerService {
   url = "http://localhost:8080";
+
   constructor(public http : HttpClient) { }
-  getMessages() : Observable<any> {
-    return this.http.get<any>(`${this.url}/messages`);
+
+  getAuthToken(): string | null {
+    return window.localStorage.getItem("auth_token");
   }
-  login(user : Credentials) : Observable<Credentials>{
-    return this.http.post<Credentials>(`${this.url}/login`, user);
+
+  setAuthToken(token : string | null) {
+    if (token !== null) {
+      window.localStorage.setItem("auth_token", token);
+    } else {
+      window.localStorage.removeItem("auth_token");
+    }
+  }
+
+  getHeaders() {
+    let headers = {};
+    if (this.getAuthToken() !== null) {
+      headers = {"Authorization" : "Bearer " + this.getAuthToken()};
+    }
+    return headers;
+  }
+
+  getMessages() : Observable<any> {
+    return this.http.get<any>(`${this.url}/messages`, {headers : this.getHeaders()});
+  }
+  login(user : Credentials) : Observable<User>{
+    return this.http.post<User>(`${this.url}/login`, user, {headers : this.getHeaders()});
   }
 
   register(signUpDto : SignUp) : Observable<User>{
-    return this.http.post<User>(`${this.url}/register`, signUpDto);
+    return this.http.post<User>(`${this.url}/register`, signUpDto, {headers : this.getHeaders()});
   }
 
 

@@ -23,19 +23,25 @@ import {AuthContentComponent} from '../auth-content/auth-content.component';
   standalone: true
 })
 export class ContentComponent {
-  componentToShow : string = "welcome";
+  componentToShow: string = "welcome";
+
   constructor(private serverService: ServerService) {
   }
 
-  showComponent(componentToShow : string) {
+  showComponent(componentToShow: string) {
     this.componentToShow = componentToShow;
+  }
+
+  setToken(token : string) {
+    this.serverService.setAuthToken(token);
+    this.componentToShow = "messages"
   }
 
   onLogin(input: Credentials): void {
     console.log(input)
     this.serverService.login(input).subscribe({
       next: (response) => {
-        console.log('res ', response)
+        this.setToken(response.token);
       },
       error: (error) => {
         console.log(error.error.message)
@@ -48,9 +54,8 @@ export class ContentComponent {
 
   onRegister(input: SignUp) {
     this.serverService.register(input).subscribe({
-      next : response => {
-        console.log("successfully: ");
-        console.log(response);
+      next: response => {
+        this.setToken(response.token);
       },
       error: err => {
         console.log("error: " + err.error.error);
