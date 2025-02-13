@@ -5,19 +5,30 @@ import {ServerService} from '../server.service';
 import {Credentials} from '../models/credentials';
 import {User} from '../models/user';
 import {SignUp} from '../models/signup';
+import {ButtonsComponent} from '../buttons/buttons.component';
+import {NgIf} from '@angular/common';
+import {AuthContentComponent} from '../auth-content/auth-content.component';
 
 @Component({
   selector: 'app-content',
   imports: [
     WelcomeContentComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    ButtonsComponent,
+    NgIf,
+    AuthContentComponent
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
   standalone: true
 })
 export class ContentComponent {
+  componentToShow : string = "welcome";
   constructor(private serverService: ServerService) {
+  }
+
+  showComponent(componentToShow : string) {
+    this.componentToShow = componentToShow;
   }
 
   onLogin(input: Credentials): void {
