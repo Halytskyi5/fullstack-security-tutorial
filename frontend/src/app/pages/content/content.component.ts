@@ -1,15 +1,13 @@
-import {Component} from '@angular/core';
-import {WelcomeContentComponent} from '../welcome-content/welcome-content.component';
-import {LoginFormComponent} from '../login-form/login-form.component';
-import {AuthService} from '../auth.service';
-import {Credentials} from '../models/credentials';
-import {User} from '../models/user';
-import {SignUp} from '../models/signup';
-import {ButtonsComponent} from '../components/buttons/buttons.component';
+import {Component, inject} from '@angular/core';
+import {WelcomeContentComponent} from '../../components/welcome-content/welcome-content.component';
+import {LoginFormComponent} from '../../components/login-form/login-form.component';
+import {AuthService} from '../../auth.service';
+import {ButtonsComponent} from '../../components/buttons/buttons.component';
 import {NgIf} from '@angular/common';
-import {AuthContentComponent} from '../components/auth-content/auth-content.component';
-import {CredentialsDto} from '../Dtos/credentialsDto';
-import {SignupDto} from '../Dtos/signupDto';
+import {AuthContentComponent} from '../../components/auth-content/auth-content.component';
+import {CredentialsDto} from '../../dtos/credentialsDto';
+import {SignupDto} from '../../dtos/signupDto';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-content',
@@ -18,7 +16,8 @@ import {SignupDto} from '../Dtos/signupDto';
     LoginFormComponent,
     ButtonsComponent,
     NgIf,
-    AuthContentComponent
+    AuthContentComponent,
+    RouterLink
   ],
   templateUrl: './content.component.html',
   styleUrl: './content.component.scss',
@@ -34,9 +33,13 @@ export class ContentComponent {
     this.componentToShow = componentToShow;
   }
 
-  setToken(token : string) {
+  setToken(token : string | null) {
     this.authService.setAuthToken(token);
     this.componentToShow = "messages"
+  }
+  logout() {
+    this.showComponent('welcome');
+    this.setToken(null)
   }
 
   onLogin(input: CredentialsDto): void {
@@ -67,5 +70,14 @@ export class ContentComponent {
       }
     })
   }
+  router = inject(Router);
+  toTest() {
+    this.router.navigateByUrl('/test').then(result => {
+      if (!result) {
+        this.router.navigateByUrl('/contents')
+      }
+    } );
+  }
 
+  protected readonly toolbar = toolbar;
 }

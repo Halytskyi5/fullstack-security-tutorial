@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CredentialsDto} from './dtoS/credentialsDto';
-import {UserDto} from './dtoS/userDto';
-import {SignupDto} from './dtoS/signupDto';
+import {CredentialsDto} from './dtos/credentialsDto';
+import {UserDto} from './dtos/userDto';
+import {SignupDto} from './dtos/signupDto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,10 @@ export class AuthService {
     } else {
       window.localStorage.removeItem("auth_token");
     }
+  }
+
+  isLoggedIn() : boolean {
+    return this.getAuthToken() != null;
   }
 
   getHeaders() {
