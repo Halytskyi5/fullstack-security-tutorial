@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Credentials} from './models/credentials';
-import {User} from './models/user';
-import {SignUp} from './models/signup';
+import {CredentialsDto} from './dtoS/credentialsDto';
+import {UserDto} from './dtoS/userDto';
+import {SignupDto} from './dtoS/signupDto';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +36,12 @@ export class AuthService {
   getMessages() : Observable<any> {
     return this.http.get<any>(`${this.url}/messages`, {headers : this.getHeaders()});
   }
-  login(user : Credentials) : Observable<User>{
-    return this.http.post<User>(`${this.url}/login`, user, {headers : this.getHeaders()});
+  login(user : CredentialsDto) : Observable<UserDto>{
+    return this.http.post<UserDto>(`${this.url}/login`, user, {headers : this.getHeaders()});
   }
 
-  register(signUpDto : SignUp) : Observable<User>{
-    return this.http.post<User>(`${this.url}/register`, signUpDto);
+  register(signUpDto : SignupDto) : Observable<UserDto>{
+    return this.http.post<UserDto>(`${this.url}/register`, signUpDto);
   }
 
 

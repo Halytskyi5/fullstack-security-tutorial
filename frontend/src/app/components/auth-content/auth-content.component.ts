@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import {NgForOf} from '@angular/common';
 import {dateTimestampProvider} from 'rxjs/internal/scheduler/dateTimestampProvider';
 

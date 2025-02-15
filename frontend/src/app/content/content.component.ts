@@ -5,9 +5,11 @@ import {AuthService} from '../auth.service';
 import {Credentials} from '../models/credentials';
 import {User} from '../models/user';
 import {SignUp} from '../models/signup';
-import {ButtonsComponent} from '../buttons/buttons.component';
+import {ButtonsComponent} from '../components/buttons/buttons.component';
 import {NgIf} from '@angular/common';
-import {AuthContentComponent} from '../auth-content/auth-content.component';
+import {AuthContentComponent} from '../components/auth-content/auth-content.component';
+import {CredentialsDto} from '../Dtos/credentialsDto';
+import {SignupDto} from '../Dtos/signupDto';
 
 @Component({
   selector: 'app-content',
@@ -37,7 +39,7 @@ export class ContentComponent {
     this.componentToShow = "messages"
   }
 
-  onLogin(input: Credentials): void {
+  onLogin(input: CredentialsDto): void {
     console.log(input)
     this.authService.login(input).subscribe({
       next: (response) => {
@@ -52,7 +54,7 @@ export class ContentComponent {
     });
   }
 
-  onRegister(input: SignUp) {
+  onRegister(input: SignupDto) {
     this.authService.register(input).subscribe({
       next: response => {
         this.setToken(response.token);
