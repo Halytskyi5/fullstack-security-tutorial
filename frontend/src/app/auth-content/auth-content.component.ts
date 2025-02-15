@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { ServerService } from '../server.service';
+import { AuthService } from '../auth.service';
 import {NgForOf} from '@angular/common';
 import {dateTimestampProvider} from 'rxjs/internal/scheduler/dateTimestampProvider';
 
@@ -14,7 +14,7 @@ import {dateTimestampProvider} from 'rxjs/internal/scheduler/dateTimestampProvid
 })
 export class AuthContentComponent implements OnInit {
   data : string[] = [];
-  constructor(public serverService : ServerService) {
+  constructor(public serverService : AuthService) {
   }
   ngOnInit() {
     this.serverService.getMessages().subscribe(response => this.data = response);

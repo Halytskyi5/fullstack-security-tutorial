@@ -8,7 +8,7 @@ import {SignUp} from './models/signup';
 @Injectable({
   providedIn: 'root'
 })
-export class ServerService {
+export class AuthService {
   url = "http://localhost:8080";
 
   constructor(public http : HttpClient) { }
@@ -41,7 +41,7 @@ export class ServerService {
   }
 
   register(signUpDto : SignUp) : Observable<User>{
-    return this.http.post<User>(`${this.url}/register`, signUpDto, {headers : this.getHeaders()});
+    return this.http.post<User>(`${this.url}/register`, signUpDto);
   }
 
 

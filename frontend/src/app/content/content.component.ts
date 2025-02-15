@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {WelcomeContentComponent} from '../welcome-content/welcome-content.component';
 import {LoginFormComponent} from '../login-form/login-form.component';
-import {ServerService} from '../server.service';
+import {AuthService} from '../auth.service';
 import {Credentials} from '../models/credentials';
 import {User} from '../models/user';
 import {SignUp} from '../models/signup';
@@ -25,7 +25,7 @@ import {AuthContentComponent} from '../auth-content/auth-content.component';
 export class ContentComponent {
   componentToShow: string = "welcome";
 
-  constructor(private serverService: ServerService) {
+  constructor(private authService: AuthService) {
   }
 
   showComponent(componentToShow: string) {
@@ -33,13 +33,13 @@ export class ContentComponent {
   }
 
   setToken(token : string) {
-    this.serverService.setAuthToken(token);
+    this.authService.setAuthToken(token);
     this.componentToShow = "messages"
   }
 
   onLogin(input: Credentials): void {
     console.log(input)
-    this.serverService.login(input).subscribe({
+    this.authService.login(input).subscribe({
       next: (response) => {
         this.setToken(response.token);
       },
@@ -53,7 +53,7 @@ export class ContentComponent {
   }
 
   onRegister(input: SignUp) {
-    this.serverService.register(input).subscribe({
+    this.authService.register(input).subscribe({
       next: response => {
         this.setToken(response.token);
       },
